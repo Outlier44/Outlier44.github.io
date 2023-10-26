@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Outlier">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/10/27/unity框架/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="关于学习QFramework游戏框架的一些重点理解笔记，本篇主要的内容主要是单例的学习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="unity-框架学习 1.单例">
+<meta property="og:url" content="http://example.com/2023/10/27/unity%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="关于学习QFramework游戏框架的一些重点理解笔记，本篇主要的内容主要是单例的学习。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="e:\Typora\1698311757855.png">
+<meta property="og:image" content="e:\Typora\1698312202646.png">
+<meta property="og:image" content="e:\Typora\1698312315392.png">
+<meta property="og:image" content="e:\Typora\1698312408354.png">
+<meta property="og:image" content="e:\Typora\1698312419549.png">
+<meta property="article:published_time" content="2023-10-26T16:37:01.000Z">
+<meta property="article:modified_time" content="2023-10-26T16:40:41.520Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="e:\Typora\1698311757855.png">
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            unity-框架学习 1.单例 -
+        
+        Outlier&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/assets/fonts.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[""]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"image":{"light":"/images/demo.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"「 Outlier的个人博客 」","subtitle":{"text":[" 「Unity」 ","Nothing is impossible for a willing heart."],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com","instagram":"https://instagram.com","zhihu":null,"twitter":null,"email":null}},"style":"fixed"},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/_posts/","icon":"fa-regular fa-house"},"分类":{"path":"/categories/","icon":"fa-regular fa-folder"}},"search":{"enable":false,"preload":true},"categories":{"分类":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"工具":{"path":"/archives","icon":"fa-regular fa-archive"},"分类":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Outlier&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/_posts/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/categories/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-folder"></i>
+                                        
+                                        分类
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/_posts/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/categories/"  >
+                             
+                                
+                                    <i class="fa-regular fa-folder"></i>
+                                
+                                分类
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">unity-框架学习 1.单例</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="https://img.gejiba.com/images/25605200778884757a33e199177f8c8a.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Outlier</span>
+                            
+                                <span class="author-label"></span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-10-27 00:37:01</span>
+        <span class="mobile">2023-10-27 00:37</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-10-27 00:40:41</span>
+            <span class="mobile">2023-10-27 00:40</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="Unity框架学习理解-1-单例"><a href="#Unity框架学习理解-1-单例" class="headerlink" title="Unity框架学习理解 1.单例"></a>Unity框架学习理解 1.单例</h1><p>个人在新学习unity框架中的一些理解</p>
+<h2 id="一-单例的最佳实践"><a href="#一-单例的最佳实践" class="headerlink" title="一. 单例的最佳实践"></a>一. 单例的最佳实践</h2><p>单例的使用一直都有很大的争议，很多人都认为它会对项目带来风险，有的人认为它为像我这样的初学者带来了便利。</p>
+<p>有风险的同时带来了便利，这便是单例的特性。</p>
+<h3 id="单例的特性"><a href="#单例的特性" class="headerlink" title="单例的特性"></a>单例的特性</h3><p>单例有两个特性：</p>
+<ul>
+<li><p>保证一个类仅有一个实例</p>
+</li>
+<li><p>提供一个访问它的全局访问点</p>
+</li>
+</ul>
+<p>从特性我们可以总结出：  </p>
+<ul>
+<li>单例有生命周期，有状态（内部的数据），因为单例是对象实例。</li>
+<li>单例可以在全局的任何一个地方获取。</li>
+</ul>
+<p>而所谓的风险也有两点：</p>
+<ol>
+<li>如果是懒加载（第一次访问的时候创建实例）的单例，则当看到单例调用时，不知道哪里做了初始化。</li>
+<li>任意位置都可以访问，项目规模一增大就会容易造成混乱。</li>
+</ol>
+<h3 id="如何解决全局访问的风险"><a href="#如何解决全局访问的风险" class="headerlink" title="如何解决全局访问的风险"></a>如何解决全局访问的风险</h3><p>其实生命周期不确定的风险与全局访问的风险相比，后者造成的危害是慢性的，也是相对严重的。</p>
+<p>为了展示全局访问的风险，我们先写一点代码，展示单例一般使用，代码如下：</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GameManager</span> : <span class="title">MonoSingleton</span>&lt;<span class="title">GameManager</span>&gt;</span><br><span class="line">   &#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Play</span>()</span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Pause</span>()</span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Resume</span>()</span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GameOver</span>()</span>&#123; &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>以上代码是一个游戏管理器，实现了一些简单的方法。</p>
+<p>使用的代码如下</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GameManager.Instance.Play(); <span class="comment">// 开始游戏</span></span><br><span class="line">GameManager.Instance.Pause(); <span class="comment">// 暂停游戏</span></span><br></pre></td></tr></table></figure></div>
+
+<p>所以风险在哪里呢？</p>
+<p>风险在 GameManager.Instance 中的 Instance 这个属性。</p>
+<p>在使用中，我们拿到了完整的 GameManager 对象。那么关于这个对象的一切，我们都是有办法获取的，比如 public 的成员变量和属性可以直接获取，更极端地是，private 可以通过反射获取 。</p>
+<p>如果我们看到这样的代码将会觉得很烦。。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GameManager.Instance.Score += <span class="number">5</span>;</span><br><span class="line">GameManager.Instance.Health += <span class="number">10</span>;</span><br><span class="line">GameManager.Instance.Play();</span><br></pre></td></tr></table></figure></div>
+
+<p>原因就是，Instance 暴露太多了，而且以上的三行代码非常有可能是顺序有关的。</p>
+<p>例如，我们调整代码使用的顺序，如下：</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GameManager.Instance.Score += <span class="number">5</span>;</span><br><span class="line">GameManager.Instance.Play();</span><br><span class="line">GameManager.Instance.Health += <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>所以观点是，尽量控制单例的API暴露，不可以全部都暴露出来。甚至，Instance 这个东西，也不希望暴露出来。</p>
+<p>我们将 GameManager 代码改成如下：</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GameManager</span> : <span class="title">MonoBehaviour</span>,<span class="title">ISingleton</span></span><br><span class="line">   &#123;</span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">static</span> GameManager mInstance</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="keyword">get</span> &#123; <span class="keyword">return</span> MonoSingletonProperty&lt;GameManager&gt;.Instance; &#125;</span><br><span class="line">       &#125;</span><br><span class="line">     </span><br><span class="line">       <span class="keyword">void</span> ISingleton.OnSingletonInit() &#123; &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">private</span> <span class="built_in">int</span> mScore = <span class="number">0</span>;</span><br><span class="line">     </span><br><span class="line">       <span class="keyword">private</span> <span class="built_in">int</span> mHealth = <span class="number">100</span>;</span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Play</span>(<span class="params"><span class="built_in">int</span> addScore,<span class="built_in">int</span> addHealth</span>)</span></span><br><span class="line">       &#123;</span><br><span class="line">           mInstance.mScore += addScore;</span><br><span class="line">           mInstance.mHealth += addHealth;</span><br><span class="line">         </span><br><span class="line">           <span class="comment">// do some thing</span></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Pause</span>()</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Resume</span>()</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GameOver</span>()</span> &#123;&#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>GameManager 发生了以下改变:</p>
+<ol>
+<li><p>单例的实现使用 MonoSingletonProperty 实现的，并且是 private 访问权限。</p>
+</li>
+<li><p>Score、Health 改成私有的权限了。</p>
+</li>
+<li><p>对外开放的 API 都是静态的，比如 Play、Pause、Resume、GameOver</p>
+</li>
+<li><p>Play 增加了两个参数</p>
+</li>
+</ol>
+<p>使用方式如下：</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GameManager.Play(<span class="number">5</span>,<span class="number">5</span>); <span class="comment">// 三句合一</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这样就可以避免，调用顺序不对的问题了，而且，我们非常严格地控制了 API 的暴露，从而减缓了全局访问的风险。</p>
+<p>当前的 GameManager 结构如下。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="E:\Typora\1698311757855.png"
+                      alt="1698311757855"
+                >这就是单例的最佳实践，它除了可以减缓全局访问的风险，还有一个好处就是，代码简短。    </p>
+<h3 id="生命周期不稳定的风险"><a href="#生命周期不稳定的风险" class="headerlink" title="生命周期不稳定的风险"></a>生命周期不稳定的风险</h3><p>这个风险指的是，懒加载会在第一次访问的时候创建实例。印象中，有一些比较难查的 bug 都是因为创建的实例时机不对造成的。</p>
+<p>比如同一帧做了大量的资源加载操作（在单例的初始化时），造成大量的 GC (最高的一次有 4.7M 的 GC），在低端设备中莫名其妙地闪退，这种问题真的很难定位。</p>
+<p>而避免产生此问题的办法非常简单，就是控制单例的初始化时机。比如，在 GameManager 类中加上 Init 方法。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GameManager</span> : <span class="title">MonoBehaviour</span>,<span class="title">ISingleton</span></span><br><span class="line">    &#123;</span><br><span class="line">    ...</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Init</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            mInstance.mScore = <span class="number">0</span>;</span><br><span class="line">            mInstance.mHealth = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">        &#125;</span><br><span class="line">     ...   </span><br><span class="line">     &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>这样我们可以在合适的时机，主动去初始化这个单例。比如进入游戏场景前，或者项目初始化时，代码如下：</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GameManager.Init();</span><br></pre></td></tr></table></figure></div>
+
+<p>这样就可以避免生命周期不稳定的风险了。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>关于一个单例是否应该使用，网上存在着很多的争议，而笔者的观点是，应该使用，但是要稍加限制：</p>
+<ol>
+<li><p>严格控制对外暴露的 API</p>
+</li>
+<li><p>严格控制单例的使用范围（这个下一篇介绍）</p>
+</li>
+<li><p>严格控制单例对象的生命周期（创建、初始化、销毁）</p>
+</li>
+</ol>
+<p>这就是我学习总结的一套，单例的最佳实践。</p>
+<h2 id="二-单例的使用范围"><a href="#二-单例的使用范围" class="headerlink" title="二. 单例的使用范围"></a>二. 单例的使用范围</h2><p>在上篇，我们学习了单例的最佳实践，在设计一个单例时要尽量做到如下规则:</p>
+<ol>
+<li><p>严格控制对外暴露的 API，与外界交互只通过静态方法。</p>
+</li>
+<li><p>严格控制单例的使用范围</p>
+</li>
+<li><p>严格控制单例对象的生命周期（创建、初始化、销毁）</p>
+</li>
+</ol>
+<p>而上篇的内容涉及了 第一条 和 第三条。</p>
+<p>而第二条，我们在这篇进行讨论。</p>
+<p>严格控制单例的使用范围，要做到这点，只需要记住一句话就好:<strong>不要让单例类的职责太多</strong></p>
+<p>什么意思呢？就是在设计单例类不要提供太多的 API，要非常谨慎地提供 API。如果一个逻辑需要调用 3 个单例的 API 完成，那么我们就要考虑，可否把这三个 API 合并成一个 API，而把原来的三个 API 迁移到 mInstance 内部实现。</p>
+<p>严格控制单例的使用范围，一般都体现于类的命名上。</p>
+<p>比如 GameManager，这个单例的作用范围，可能是玩家开始游戏的阶段（开始、暂停、继续、游戏结束）等，但是它的名字太大了，类的名字应该体现类的职责。GameManager 意思是 游戏管理，太模糊，单从名字上来看不知道管理什么，所以要进一步明确，比如 GameStateManager&#x2F;GameStatusManager，游戏的状态管理，GamePlayManager，游戏的玩法管理（实现玩法) 等等。这样比起一个叫 GameManager 的类名，职责却是 GameStateManager 的职责好太多。</p>
+<p>再比如，QFramework 中的 UIKit，其作用范围比较广，只要是 UI 界面相关的逻辑它都管，但是它是框架层的工具。<br> 作为框架的部分，对单例设计的要求不太一样，对于整体框架来说，提供的概念应该尽可能地少，比如 UIKit,ResKit （qf框架）等。假如 UI 的层级管理用 UILayerMgr，UI 的生命周期管理，用 UILifeMgr，UI 的事件管理用 UIEventMgr，这样做虽然符合单一职责原则，但是用户要接触三个概念才能掌握一个框架，学习成本较高，那么在 QFramework 里，只用一个 UIKit 搞定一切，用户要记住得比较少，减轻负担。</p>
+<p>所以对于框架层，单例设计的要求又有点不一样，不过 UIKit，ResKIt 都是符合单例的最佳实践的 第一条和第三条要求的，第二条要求只是尽可能地符合，因为要考虑用户的使用体验。</p>
+<p>所以说 框架层、逻辑层都是怎么分的？</p>
+<p>我们先看下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="E:\Typora\1698312202646.png"
+                      alt="1698312202646"
+                ></p>
+<p>这张图为一般的项目结构，基本上分为三层。</p>
+<ol>
+<li><p>UI&#x2F;Logic 控制逻辑、表现： 大量的死逻辑，无法复用，都是一些控制脚本还有 UI 界面的控制逻辑，主要处理玩家的输入和控制游戏的流程</p>
+</li>
+<li><p>业务模块：一些业务模块&#x2F;系统，有一定的复用性，比如 GameManager，可以在多个脚本内调用。</p>
+</li>
+<li><p>框架&#x2F;公共模块&#x2F;工具：第三方插件、原生 SDK 、跨项目复用的框架、公共模块等，为项目提供最基本的支持。</p>
+</li>
+</ol>
+<p>我们可以把每个业务模块设计成一个单例，这样使用的范围就能确定，比如商店模块，装备模块等，战斗模块等，对应的名字应该为 ShopManager，EquipManager，BattleManager 等。</p>
+<p>而每个业务模块提供极少的 API，比如：</p>
+<ul>
+<li>ShopManager</li>
+</ul>
+<p>–     Buy(id):买物品</p>
+<p>–     Sell(id):卖物品</p>
+<ul>
+<li>EquipManager</li>
+</ul>
+<p>–     Equip(position,id)：穿装备</p>
+<p>–     UnEquip(position,id)：卸掉装备</p>
+<ul>
+<li>BattleManager</li>
+</ul>
+<p>–     Attack(id)：攻击</p>
+<p>–     Defence(id)：防御</p>
+<p>如果每个模块能够设计成这样，能够提供极少数的 API 就能实现模块本身的功能，那么整个项目结构则会非常清晰，而使用单例的危害会降到最低，项目的结构会一直保持一个比较健康的状态。</p>
+<p>模块之间可以有依赖，但是要尽量保持树形（自顶向下，单向依赖），而不是互相依赖，OK，这是关于模块划分的内容，我们以后会重点讲这个部分内容，现在先不说这个。</p>
+<p>OK，到此，我们简单聊过了控制单例的使用范围这条规则。</p>
+<p>结论就是，尽量让单例的职责少一点，提供的 API 少一点，不要把一个单例类的名字起得太大了，比如：AppManager 、GameManager 等。</p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>严格控制单例的使用范围，即单例的职责要尽可能地少，类名要准确描述其职责，不能太大（AppManager，GameManager），框架层另说。</p>
+<h2 id="三-补充"><a href="#三-补充" class="headerlink" title="三. 补充"></a>三. 补充</h2><p>我们目前接触了决定版架构，分为四个层级：</p>
+<p>•      表现层</p>
+<p>•      系统层</p>
+<p>•      模型层</p>
+<p>•      工具层</p>
+<p>而单例的提供一般是提供两种类型的单例：</p>
+<p>•      C# 类单例</p>
+<p>•      Mono 单例</p>
+<p>在我们的决定版架构中，C# 类的单例就完全没有必要使用了，因为我们可以使用架构中的系统层来替代，架构本身就是一个像单例一样的的东西，而且也完全符合上一篇介绍的单例的最佳实践。</p>
+<p>但是 Mono 单例并不能完全抛弃掉，因为 Mono 单例确实在 Unity 里很方便，它可以提供生命周期委托，也可以作为 GameObject 的管理器，也可以开启协程，带来了很多的便利。这些提供的功能，很明显都是表现层需要用到的功能。</p>
+<p>所以 Mono 单例我们把它算作我们架构中表现层的内容，它像其他的表现层一样，只需要实现一个 IController 接口就可以与我们的架构底层进行交互，这样的话既保留了 Mono 单例的优点（便利），又削弱了 Mono 单例职责，从而改善 Mono 单例职责过大的问题。相对地，我们的决定版架构几乎都是 C# 类，并没有太多与 Mono 相关的的内容，如果一个项目只使用决定版架构，那么表现层会有很多工作是比较难进行的，因为一般的项目都需要通过 Mono 单例提供统一的生命周期函数、提供协程、提供 GameObject 管理功能等，而将 Mono 单例算作决定版架构中的表现层，恰好填补了这块空缺。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="E:\Typora\1698312315392.png"
+                      alt="1698312315392"
+                ></p>
+<p>Mono 单例可以提供很多便利，避免单例的职责过大，再加上一篇介绍的单例最佳实践，可以获得 Mono 单例便利的同时还可以降低 Mono 单例的风险。</p>
+<p>由于 Singleton 与 SingletonProperty 都需要用到通过反射创建实例的功能，所以把这个功能单独提取出来，放到了 SingletonCreator 里。本质上是为了减少重复代码。</p>
+<p>MonoSingleton 与 MonoSingletonProperty 也需要相同的创建实例方式（创建 GameObject），所以也单独写了一个 MonoSignletonCreator。</p>
+<p>SingeltonKit 看起来比一般的单例复杂一点，主要是因为它本身有一定的结构。</p>
+<p>产生结构的原因也很简单，是因为它要满足很多需求（项目中的，框架内部的），但是最根本的原因是为了减少重复代码。</p>
+<p>笔者脑海中，Singleton 模块的结构如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="E:\Typora\1698312408354.png"
+                      alt="1698312408354"
+                ></p>
+<p>箭头表示，谁为谁提供服务。</p>
+<p>UML 的类图如下所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="E:\Typora\1698312419549.png"
+                      alt="1698312419549"
+                ></p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> unity-框架学习 1.单例</li>
+        <li><strong>Author:</strong> Outlier</li>
+        <li><strong>Created at:</strong> 2023-10-27 00:37:01</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-10-27 00:40:41
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/10/27/unity框架/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/10/27/unity%E6%91%84%E5%83%8F%E6%9C%BA%E8%B7%9F%E9%9A%8F%E4%B8%BB%E8%A7%922D%E6%A1%88%E4%BE%8B%E4%BB%A3%E7%A0%81/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">unity 摄像机跟随主角案例代码</span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">unity-框架学习 1.单例</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%90%86%E8%A7%A3-1-%E5%8D%95%E4%BE%8B"><span class="nav-text">Unity框架学习理解 1.单例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E5%8D%95%E4%BE%8B%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-text">一. 单例的最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-text">单例的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%85%A8%E5%B1%80%E8%AE%BF%E9%97%AE%E7%9A%84%E9%A3%8E%E9%99%A9"><span class="nav-text">如何解决全局访问的风险</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8D%E7%A8%B3%E5%AE%9A%E7%9A%84%E9%A3%8E%E9%99%A9"><span class="nav-text">生命周期不稳定的风险</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E5%8D%95%E4%BE%8B%E7%9A%84%E4%BD%BF%E7%94%A8%E8%8C%83%E5%9B%B4"><span class="nav-text">二. 单例的使用范围</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E8%A1%A5%E5%85%85"><span class="nav-text">三. 补充</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Outlier</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.2</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2022/8/17 11:45:14
+            </div>
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/layouts/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
